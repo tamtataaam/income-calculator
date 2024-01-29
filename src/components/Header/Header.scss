@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid lightgrey;
+
+  .user-info {
+    display: flex;
+    gap: 10px;
+  }
+
+  a {
+    color: #1976d2;
+  }
+}
