@@ -1,6 +1,6 @@
-import { IncomeTableData } from './types';
+import { IncomeData } from './types';
 
-export const initialData: IncomeTableData[] = [
+export const initialData: IncomeData[] = [
   {
     id: 1,
     income: 28,

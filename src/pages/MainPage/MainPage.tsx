@@ -1,5 +1,4 @@
-import { Header } from '../../components/Header/Header';
-import { Tabs } from '../../components/Tabs/Tabs';
+import { Header, Tabs } from 'components';
 
 import './MainPage.scss';
 

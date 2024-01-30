@@ -1,15 +1,18 @@
 .header {
   display: flex;
   justify-content: space-between;
+  gap: 36px;
   padding: 10px;
   border-bottom: 1px solid lightgrey;
 
   .user-info {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   a {
     color: #1976d2;
+    margin-left: 10px;
   }
 }

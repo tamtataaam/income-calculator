@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import incomeNowReducer from './IncomeNow/slice';
+import { incomeSlice } from './income';
 
 const rootReducer = combineReducers({
-  incomeNowReducer,
+  [incomeSlice.name]: incomeSlice.reducer,
 });
 
 export const setupStore = () => {

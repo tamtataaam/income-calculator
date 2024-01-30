@@ -1,39 +1,28 @@
-import { ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, ChangeEvent } from 'react';
 import ReactDatePicker from 'react-datepicker';
-
 import { Button, TableCell, TableRow, TextField } from '@mui/material';
-import { addData, changeForm, clearForm, getIncomeNowForm } from '../../store/IncomeNow';
-import { formatDate } from '../../utils/formatDate';
+import { useAppDispatch } from 'hooks';
+import { FormRowProps } from './types';
 
-export const FormRow = () => {
-  const formData = useSelector(getIncomeNowForm);
-  const dispatch = useDispatch();
+import './FormRow.scss';
 
-  const handleSaveInfo = () => {
-    if (!formData.income || !formData.date) return;
-
-    const info = {
-      ...formData,
-      id: new Date().valueOf(),
-      date: formatDate(formData.date),
-      income: formData.income!,
-    };
-
-    dispatch(addData(info));
-    dispatch(clearForm());
-  };
+export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) => {
+  const dispatch = useAppDispatch();
 
   const handleChangeIncome = (e: ChangeEvent<HTMLInputElement>) => {
     const isNumber = /^\d*$/.test(e.target.value);
 
-    if (isNumber) {
-      dispatch(changeForm({ ...formData, income: +e.target.value, date: new Date() }));
+    if (!isNumber) {
+      dispatch(changeForm({ ...form, income: '', date: null }));
     }
 
-    if (!e.target.value) {
-      dispatch(changeForm({ ...formData, income: '', date: null }));
+    if (isNumber) {
+      dispatch(changeForm({ ...form, income: +e.target.value, date: new Date() }));
     }
+
+    // if (!e.target.value) {
+    //   dispatch(changeForm({ ...form, income: '', date: null }));
+    // }
   };
 
   return (
@@ -43,7 +32,7 @@ export const FormRow = () => {
           label="Доход"
           variant="outlined"
           size="small"
-          value={formData.income}
+          value={form.income}
           onChange={handleChangeIncome}
         />
       </TableCell>
@@ -52,15 +41,15 @@ export const FormRow = () => {
           label="Источник"
           variant="outlined"
           size="small"
-          value={formData.source}
-          onChange={(e) => dispatch(changeForm({ ...formData, source: e.target.value }))}
+          value={form.source}
+          onChange={(e) => dispatch(changeForm({ ...form, source: e.target.value }))}
         />
       </TableCell>
       <TableCell align="center">
         <ReactDatePicker
           showTimeSelect
-          selected={formData.date}
-          onChange={(date) => dispatch(changeForm({ ...formData, date }))}
+          selected={form.date}
+          onChange={(date) => dispatch(changeForm({ ...form, date }))}
           dateFormat="d.MM.yyyy hh:mm"
           placeholderText="Дата и время"
         />
@@ -70,8 +59,8 @@ export const FormRow = () => {
           label="Примечание"
           variant="outlined"
           size="small"
-          value={formData.description}
-          onChange={(e) => dispatch(changeForm({ ...formData, description: e.target.value }))}
+          value={form.description}
+          onChange={(e) => dispatch(changeForm({ ...form, description: e.target.value }))}
         />
       </TableCell>
       <TableCell align="center">
@@ -79,7 +68,7 @@ export const FormRow = () => {
           variant="contained"
           sx={{ borderRadius: 100, minWidth: '36px', height: '36px', padding: '10px' }}
           onClick={handleSaveInfo}
-          disabled={!formData.income}
+          disabled={!form.income}
         >
           +
         </Button>

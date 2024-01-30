@@ -5,7 +5,7 @@ export type IncomeForm = {
   description: string;
 };
 
-export type IncomeTableData = {
+export type IncomeData = {
   id: number;
   income: number;
   source: string;
@@ -15,5 +15,10 @@ export type IncomeTableData = {
 
 export type IncomeState = {
   form: IncomeForm;
-  data: IncomeTableData[];
+  data: IncomeData[];
+};
+
+export type IncomeRootState = {
+  incomeNow: IncomeState;
+  plannedIncome: IncomeState;
 };

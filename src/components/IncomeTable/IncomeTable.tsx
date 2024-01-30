@@ -1,25 +1,36 @@
+import { FC } from 'react';
 import {
   TableContainer,
-  Table as TableMUI,
+  Table,
   TableHead,
   TableRow,
   TableCell,
   TableBody,
   Paper,
 } from '@mui/material';
-import { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { getIncomeNowData, getTotalIncome } from '../../store/IncomeNow/selectors';
-import { FormRow } from '../FormRow/FormRow';
-import { TableProps } from './types';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
-export const Table: FC<TableProps> = () => {
-  const data = useSelector(getIncomeNowData);
-  const totalIncome = useSelector(getTotalIncome);
+import { FormRow } from 'components/FormRow';
+import { IncomeTableProps } from './types';
+
+export const IncomeTable: FC<IncomeTableProps> = ({ tableName, changeForm, submitForm }) => {
+  const dispatch = useAppDispatch();
+
+  const form = useAppSelector((store) => store.income[tableName].form);
+  const data = useAppSelector((store) => store.income[tableName].data);
+  const totalIncome = data.reduce((acc, item) => acc + item.income, 0);
+
+  const handleSaveInfo = () => {
+    if (!form.income || !form.date) {
+      return;
+    }
+
+    dispatch(submitForm());
+  };
 
   return (
     <TableContainer component={Paper}>
-      <TableMUI>
+      <Table>
         <TableHead sx={{ backgroundColor: 'lightgrey' }}>
           <TableRow>
             <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
@@ -43,7 +54,7 @@ export const Table: FC<TableProps> = () => {
               align="center"
               sx={{ width: '22.5', padding: '10px', borderRight: '1px solid lightgrey' }}
             >
-              + {totalIncome}
+              +{totalIncome}
             </TableCell>
             <TableCell />
             <TableCell />
@@ -51,12 +62,12 @@ export const Table: FC<TableProps> = () => {
             <TableCell />
           </TableRow>
 
-          <FormRow />
+          <FormRow form={form} changeForm={changeForm} handleSaveInfo={handleSaveInfo} />
 
           {data.map((row) => (
             <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                + {row.income}
+                +{row.income}
               </TableCell>
               <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
                 {row.source}
@@ -71,7 +82,7 @@ export const Table: FC<TableProps> = () => {
             </TableRow>
           ))}
         </TableBody>
-      </TableMUI>
+      </Table>
     </TableContainer>
   );
 };
