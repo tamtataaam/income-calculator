@@ -9,10 +9,19 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
+
+    & > a {
+      margin-left: 10px;
+    }
   }
 
   a {
     color: #1976d2;
-    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .header {
+    font-size: 12px;
   }
 }

@@ -49,8 +49,15 @@ export const Tabs = () => {
   return (
     <Box sx={{ width: '100vw', typography: 'body1' }}>
       <TabContext value={selectedTab}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChangeTab}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: 'divider',
+            backgroundColor: '#1976d2',
+            color: 'white',
+          }}
+        >
+          <TabList onChange={handleChangeTab} indicatorColor="secondary" textColor="inherit">
             {tabs.map(({ label, value }) => (
               <Tab
                 sx={{ width: 'calc(100vw / 3)', maxWidth: 'calc(100vw / 3)' }}

@@ -9,11 +9,30 @@
 
 .MuiInputBase-input {
   padding: 6.5px 10px !important;
+  font-size: 14px !important;
 }
 
-.react-datepicker__input-container {
-  input {
-    padding: 8px 10px;
-    font-size: 14px;
+.MuiIconButton-edgeEnd {
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.MuiSvgIcon-root {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.date-picker {
+  label {
+    top: -8px !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .MuiTableCell-root {
+    line-height: 1rem !important;
   }
 }

@@ -18,7 +18,17 @@ export type IncomeState = {
   data: IncomeData[];
 };
 
+export type PivotTableData = {
+  id: number;
+  month: string;
+  now: number;
+  planned: number;
+};
+
 export type IncomeRootState = {
   incomeNow: IncomeState;
   plannedIncome: IncomeState;
+  pivotTable: {
+    data: PivotTableData[];
+  };
 };

@@ -1,6 +1,10 @@
 import { FC, ChangeEvent } from 'react';
-import ReactDatePicker from 'react-datepicker';
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Button, TableCell, TableRow, TextField } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { useAppDispatch } from 'hooks';
 import { FormRowProps } from './types';
 
@@ -9,6 +13,9 @@ import './FormRow.scss';
 export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) => {
   const dispatch = useAppDispatch();
 
+  const selectedDate = form.date ? dayjs(form.date) : undefined;
+
+  // TODO: fix date bug
   const handleChangeIncome = (e: ChangeEvent<HTMLInputElement>) => {
     const isNumber = /^\d*$/.test(e.target.value);
 
@@ -27,7 +34,7 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
 
   return (
     <TableRow>
-      <TableCell align="center">
+      <TableCell align="center" sx={{ padding: '8px' }}>
         <TextField
           label="Доход"
           variant="outlined"
@@ -36,7 +43,7 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
           onChange={handleChangeIncome}
         />
       </TableCell>
-      <TableCell align="center">
+      <TableCell align="center" sx={{ padding: '8px' }}>
         <TextField
           label="Источник"
           variant="outlined"
@@ -45,16 +52,20 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
           onChange={(e) => dispatch(changeForm({ ...form, source: e.target.value }))}
         />
       </TableCell>
-      <TableCell align="center">
-        <ReactDatePicker
-          showTimeSelect
-          selected={form.date}
-          onChange={(date) => dispatch(changeForm({ ...form, date }))}
-          dateFormat="d.MM.yyyy hh:mm"
-          placeholderText="Дата и время"
-        />
+      <TableCell align="center" sx={{ padding: '8px' }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateTimePicker
+            className="date-picker"
+            defaultValue={selectedDate}
+            label="Дата и время"
+            onChange={(date) => dispatch(changeForm({ ...form, date: date!.toDate() }))}
+            views={['year', 'month', 'day', 'hours', 'minutes']}
+            timeSteps={{ minutes: 1 }}
+            ampm={false}
+          />
+        </LocalizationProvider>
       </TableCell>
-      <TableCell align="center">
+      <TableCell align="center" sx={{ padding: '8px' }}>
         <TextField
           label="Примечание"
           variant="outlined"
@@ -63,14 +74,14 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
           onChange={(e) => dispatch(changeForm({ ...form, description: e.target.value }))}
         />
       </TableCell>
-      <TableCell align="center">
+      <TableCell align="center" sx={{ padding: '8px' }}>
         <Button
           variant="contained"
-          sx={{ borderRadius: 100, minWidth: '36px', height: '36px', padding: '10px' }}
+          sx={{ borderRadius: 100, minWidth: '36px', height: '36px', padding: 0 }}
           onClick={handleSaveInfo}
           disabled={!form.income}
         >
-          +
+          <AddIcon fontSize="small" />
         </Button>
       </TableCell>
     </TableRow>

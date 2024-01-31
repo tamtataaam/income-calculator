@@ -3,15 +3,18 @@ import {
   TableContainer,
   Table,
   TableHead,
-  TableRow,
+  TableRow as TableRowMUI,
   TableCell,
   TableBody,
   Paper,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks';
 
-import { FormRow } from 'components/FormRow';
+import { TableRow, FormRow } from 'components';
 import { IncomeTableProps } from './types';
+import { deleteIncomeNowRow, deletePlannedIncomeRow } from 'store/income';
+
+import './IncomeTable.scss';
 
 export const IncomeTable: FC<IncomeTableProps> = ({ tableName, changeForm, submitForm }) => {
   const dispatch = useAppDispatch();
@@ -29,10 +32,10 @@ export const IncomeTable: FC<IncomeTableProps> = ({ tableName, changeForm, submi
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead sx={{ backgroundColor: 'lightgrey' }}>
-          <TableRow>
+    <TableContainer component={Paper} sx={{ maxHeight: 'calc(100vh - 42px - 50px)' }}>
+      <Table stickyHeader>
+        <TableHead>
+          <TableRowMUI>
             <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
               Доход
             </TableCell>
@@ -45,11 +48,12 @@ export const IncomeTable: FC<IncomeTableProps> = ({ tableName, changeForm, submi
             <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
               Примечание
             </TableCell>
-            <TableCell align="center" sx={{ width: '70px', padding: '10px' }} />
-          </TableRow>
+            <TableCell align="center" sx={{ width: '40px', padding: '10px' }} />
+          </TableRowMUI>
         </TableHead>
+
         <TableBody>
-          <TableRow>
+          <TableRowMUI>
             <TableCell
               align="center"
               sx={{ width: '22.5', padding: '10px', borderRight: '1px solid lightgrey' }}
@@ -60,26 +64,16 @@ export const IncomeTable: FC<IncomeTableProps> = ({ tableName, changeForm, submi
             <TableCell />
             <TableCell />
             <TableCell />
-          </TableRow>
+          </TableRowMUI>
 
           <FormRow form={form} changeForm={changeForm} handleSaveInfo={handleSaveInfo} />
 
           {data.map((row) => (
-            <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                +{row.income}
-              </TableCell>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                {row.source}
-              </TableCell>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                {row.date}
-              </TableCell>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                {row.description}
-              </TableCell>
-              <TableCell />
-            </TableRow>
+            <TableRow
+              row={row}
+              key={row.id}
+              onDelete={tableName === 'incomeNow' ? deleteIncomeNowRow : deletePlannedIncomeRow}
+            />
           ))}
         </TableBody>
       </Table>
