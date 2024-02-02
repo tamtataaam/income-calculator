@@ -1,7 +1,7 @@
 export type IncomeForm = {
   income: number | '';
   source: string;
-  date: Date | null;
+  date: string | null;
   description: string;
 };
 

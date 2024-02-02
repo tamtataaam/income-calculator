@@ -1,14 +1,18 @@
 .MuiTextField-root {
-  height: 36px !important;
   min-width: 60px !important;
 }
 
 .MuiInputLabel-root {
   font-size: 14px !important;
+  top: -8px !important;
+}
+
+.MuiInputLabel-shrink {
+  top: 0 !important;
 }
 
 .MuiInputBase-input {
-  padding: 6.5px 10px !important;
+  padding: 8px 10px !important;
   font-size: 14px !important;
 }
 
@@ -22,12 +26,6 @@
 .MuiSvgIcon-root {
   &:hover {
     cursor: pointer;
-  }
-}
-
-.date-picker {
-  label {
-    top: -8px !important;
   }
 }
 

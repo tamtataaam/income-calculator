@@ -1,0 +1,14 @@
+.login-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .MuiButton-root {
+    margin: 20px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+}

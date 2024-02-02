@@ -1,3 +1,18 @@
+import { useState } from 'react';
+import { LoginForm, RegistrationForm } from 'components';
+
+import './AuthPage.scss';
+
 export const AuthPage = () => {
-  return <div>AuthPage</div>;
+  const [login, setLogin] = useState(true);
+
+  return (
+    <div className="auth-page">
+      {
+        login 
+          ? <LoginForm setLogin={setLogin} /> 
+          : <RegistrationForm setLogin={setLogin} />
+      }
+    </div>
+  );
 };
