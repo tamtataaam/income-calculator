@@ -5,15 +5,23 @@ import { IncomeTable, PivotTable } from 'components';
 import {
   changeIncomeNowForm,
   changePlannedIncomeForm,
-  submitIncomeNowForm,
+  // submitIncomeNowForm,
   submitPlannedIncomeForm,
 } from 'store/income';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { addIncome } from 'store/income/thunk';
 
 export const Tabs = () => {
+  const dispatch = useAppDispatch();
+  const { form } = useAppSelector((store) => store.income.incomeNow);
   const [selectedTab, setSelectedTab] = useState('income-now');
 
   const handleChangeTab = (_: SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
+  };
+
+  const submitIncomeNowForm = () => {
+    dispatch(addIncome({ ...form, monthId: 1 }));
   };
 
   const tabs = [
@@ -24,6 +32,7 @@ export const Tabs = () => {
         <IncomeTable
           tableName="incomeNow"
           changeForm={changeIncomeNowForm}
+          // @ts-ignore
           submitForm={submitIncomeNowForm}
         />
       ),

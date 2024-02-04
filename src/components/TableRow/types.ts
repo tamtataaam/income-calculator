@@ -3,5 +3,5 @@ import { IncomeData } from 'store/income/types';
 
 export type TableRowProps = {
   row: IncomeData;
-  onDelete: ActionCreatorWithPayload<{ id: number }, string>;
+  onDelete: ActionCreatorWithPayload<{ id: string }, string>;
 };

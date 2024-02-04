@@ -1,5 +1,6 @@
 export { RegistrationForm } from './RegistrationForm';
 export { LoginForm } from './LoginForm';
+export { MonthSelect } from './MonthSelect';
 export { FormRow } from './FormRow';
 export { Header } from './Header';
 export { IncomeTable } from './IncomeTable';

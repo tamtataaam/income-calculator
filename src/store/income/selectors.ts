@@ -29,6 +29,6 @@ export const getIncomeNowData = createSelector(
 
 export const getTotalIncomeNow = createSelector(
   getIncomeNowData, 
-  (data) => data.reduce((acc, item) => acc + item.income, 0),
+  (data) => data.reduce((acc, item) => acc + item.sum, 0),
 );
 

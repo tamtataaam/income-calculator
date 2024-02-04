@@ -1,4 +1,5 @@
 .registration-form {
+  max-width: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,4 +12,9 @@
   h2 {
     font-size: 30px;
   }
+}
+
+.success-message {
+  text-align: center;
+  color: green;
 }

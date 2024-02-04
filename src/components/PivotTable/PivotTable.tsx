@@ -8,47 +8,56 @@ import {
   TableBody,
   Paper,
 } from '@mui/material';
+import { useAppSelector } from 'hooks';
 import { PivotTableProps } from './types';
 
 export const PivotTable: FC<PivotTableProps> = () => {
+  // TODO: use createSelector
+  const { data } = useAppSelector((store) => store.income.pivotTable);
+
+  const totalIncomeNow = data.reduce((acc, month) => {
+    acc += month.now;
+    return acc;
+  }, 0);
+
+  const totalPlannedIncome = data.reduce((acc, month) => {
+    acc += month.planned;
+    return acc;
+  }, 0);
+
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead sx={{ backgroundColor: 'lightgrey' }}>
           <TableRow>
-            <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
+            <TableCell align="center" />
+            <TableCell align="center" sx={{ padding: '10px' }}>
               Сейчас
+              <br />
+              <b>+{totalIncomeNow}</b>
             </TableCell>
-            <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-              +435345
-            </TableCell>
-            <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
+            <TableCell align="center" sx={{ padding: '10px' }}>
               Планируемый
-            </TableCell>
-            <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-              +576453
+              <br />
+              <b>+{totalPlannedIncome}</b>
             </TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
-          {/* {data.map((row) => (
-            <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                + {row.income}
+          {data.map((month) => (
+            <TableRow key={month.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell align="left" sx={{ fontWeight: '700' }}>
+                {month.month} {month.year}
               </TableCell>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                {row.source}
+              <TableCell align="center" sx={{ padding: '10px' }}>
+                +{month.now}
               </TableCell>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                {row.date}
+              <TableCell align="center" sx={{ padding: '10px' }}>
+                +{month.planned}
               </TableCell>
-              <TableCell align="center" sx={{ width: '22.5vw', padding: '10px' }}>
-                {row.description}
-              </TableCell>
-              <TableCell />
             </TableRow>
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

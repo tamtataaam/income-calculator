@@ -19,14 +19,14 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
     const isNumber = /^\d*$/.test(e.target.value);
 
     if (!isNumber) {
-      dispatch(changeForm({ ...form, income: '', date: null }));
+      dispatch(changeForm({ ...form, sum: '', date: null }));
     }
 
     if (isNumber) {
       if (form.date) {
-        return dispatch(changeForm({ ...form, income: +e.target.value }));
+        return dispatch(changeForm({ ...form, sum: +e.target.value }));
       }
-      dispatch(changeForm({ ...form, income: +e.target.value, date: new Date().toISOString() }));
+      dispatch(changeForm({ ...form, sum: +e.target.value, date: new Date().toISOString() }));
     }
   };
 
@@ -36,7 +36,7 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
         <TextField
           label="Доход"
           variant="outlined"
-          value={form.income}
+          value={form.sum}
           onChange={handleChangeIncome}
         />
       </TableCell>
@@ -80,7 +80,7 @@ export const FormRow: FC<FormRowProps> = ({ form, changeForm, handleSaveInfo }) 
           variant="contained"
           sx={{ borderRadius: 100, minWidth: '36px', height: '36px', padding: 0 }}
           onClick={handleSaveInfo}
-          disabled={!form.income}
+          disabled={!form.sum}
         >
           <AddIcon fontSize="small" />
         </Button>
